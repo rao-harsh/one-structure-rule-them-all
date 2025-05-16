@@ -2,6 +2,7 @@
   "name": "one-structure-rule-them-all",
   "version": "1.0.0",
   "description": "Repository holding the best folder structure for typescript and express",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
@@ -38,7 +39,7 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.15.18",
     "@types/uuid": "^10.0.0",
-    "eslint": "^9.0.0",
+    "eslint": "^8.56.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-node": "^11.1.0",
     "husky": "^9.0.11",
