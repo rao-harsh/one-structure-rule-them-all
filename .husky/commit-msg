@@ -1,0 +1,46 @@
+#!/bin/bash
+# Husky commit-msg hook
+# This script validates the format of commit messages
+
+# Get the commit message from the file provided by Git
+commit_msg=$(cat "$1")
+
+# Define valid commit types
+valid_types="^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .+"
+
+# Define merge commit pattern
+merge_pattern="^Merge (branch|pull request|remote-tracking branch) '.+'"
+
+# Check if it's a merge commit
+if echo "$commit_msg" | grep -qE "$merge_pattern"; then
+  echo "✅ Merge commit detected, allowing"
+  exit 0
+fi
+
+# Validate the commit message format
+if ! echo "$commit_msg" | grep -qE "$valid_types"; then
+  echo "ERROR: Invalid commit message format."
+  echo ""
+  echo "Commit message must start with one of the following types:"
+  echo "feat:     New features"
+  echo "fix:      Bug fixes"
+  echo "docs:     Documentation updates"
+  echo "style:    Code style updates (no functional change)"
+  echo "refactor: Code refactoring (no functional change)"
+  echo "test:     Adding or updating tests"
+  echo "chore:    Maintenance tasks (e.g., package updates)"
+  echo ""
+  echo "Examples:"
+  echo "✅ feat: implement user authentication (#JIRA-101)"
+  echo "✅ fix: resolve memory leak issue (#JIRA-202)"
+  echo "✅ docs: update API documentation for authentication (#JIRA-303)"
+  echo "✅ refactor: optimize database queries for better performance"
+  echo ""
+  echo "Note: Merge commits are automatically allowed."
+  echo ""
+  exit 1
+fi
+
+# If we get here, all checks passed
+echo "✅ Commit message format is valid"
+exit 0
